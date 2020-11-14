@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+    <title>Title</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Hot Restaurant</h1>
+            <p class="lead"> We only have 5 tables! Book your seat before they are all gone!</p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="/" role="button"
+                style="background-color: white; border-color: black;"><i class="fas fa-home"></i></a>
+            <a class="btn btn-primary btn-lg" href="/reserve" role="button"
+                style="background-color: red; border-color: red;">Make Reservations</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="current-reserve">
+            <h1>Current Reservations</h1>
+        </div>
+
+        <div id="waitlist">
+            <h1>Wait List</h1>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <p>
+            <a href="/api/get-reservations">API Table Link</a>
+            <span>|</span>
+            <a href="/api/get-waitlist">API Wish List</a>
+        </p>
+    </div>
+
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $.get("/api/get-reservations", function (data) {
+                data.forEach((e, i) => {
+                    $('#current-reserve').append(
+                        `<div>
+                            <p>Table #${i + 1}</p>
+                            <hr class="my-4">
+                            <p>ID: ${e.id}</p>
+                            <p>Name: ${e.name}</p>
+                            <p>Email: ${e.email}</p>
+                            <p>Phone: ${e.phone}</p>
+                            
+                        </div>`
+                    )
+                });
+            });
+
+
+            $.get("/api/get-waitlist", function (data) {
+                data.forEach((e, i) => {
+                    $('#waitlist').append(
+                        `<div>
+                            <p>Table #${i + 1}</p>
+                            <hr class="my-4">
+                            <p>ID: ${e.id}</p>
+                            <p>Name: ${e.name}</p>
+                            <p>Email: ${e.email}</p>
+                            <p>Phone: ${e.phone}</p>
+                            
+                        </div>`
+                    )
+                });
+            });
+        });
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
